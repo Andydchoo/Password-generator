@@ -10,7 +10,6 @@ var lowerString = "abcdefghijklmnopqrstuvwxyz"
 var upperString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 var numberString = "0123456789";
 var specialString = "!@#$%^&*?";
-var finalPassword = [];
 
 // Write password to the #password input
 function writePassword() {
@@ -27,7 +26,7 @@ generateBtn.addEventListener("click", writePassword);
 
 //Start a series of prompts asking for user's input on how they want their pswd
 function settings() {
-  chars = prompt("How many Characters in your password?", "Enter a number 8-128");
+  chars = prompt("How many Characters in your password?(Enter 8-128 characters)");
   if (chars < 8) {
     alert("Must have at least 8 Characters.");
     return;
@@ -37,56 +36,52 @@ function settings() {
     return;
   }
 
-  uppercaseBox = confirm("Password contains uppercase letters?(Cancel for no uppercase)");
-  lowercaseBox = confirm("Password contains lowercase?(Cancel for no lowercase)");
-  numbersBox = confirm("Password contains numbers?(Cancel for no numbers)");
-  specialCharBox = confirm("Password contains special characters?(Cancel for no special characters)");
+  uppercase = confirm("Password contains uppercase letters?(Cancel for no uppercase)");
+  lowercase = confirm("Password contains lowercase?(Cancel for no lowercase)");
+  numbers = confirm("Password contains numbers?(Cancel for no numbers)");
+  specialChar = confirm("Password contains special characters?(Cancel for no special characters)");
 
-let userInput = {
-  chars : chars,
-  uppercaseBox : uppercaseBox,
-  numbersBox : numbersBox,
-  specialCharBox : specialCharBox
-}
+  let userInput = {
+    chars : chars,
+    uppercase : uppercase,
+    lowercase : lowercase,
+    numbers : numbers,
+    specialChar : specialChar
+  }
   return userInput;
 }
 
+
 //Begin dumbed down algorithm for generating a password
 function generatePassword() {
-
+    var finalPassword = [];
   //Generate random characters from the user's choices
   function getCharacters() {
-  for (let i = 0; i < (chars / 4); i++) {
-  var placeChar;
-  if (uppercase == true) {
-    placeChar += upperString.charAt(Math.floor(Math.random() * upperString.length));
-    return finalPassword.push(placeChar);
-  } else {
-
-  }
-  if (lowercase == true) {
-    placeChar += upperString.charAt(Math.floor(Math.random() * upperString.length));
-    return finalPassword.push(placeChar);
-  } else {
-
-  }
-  if (numbers == true) {
-    placeChar += numberString.charAt(Math.floor(Math.random() * numberString.length));
-    return finalPassword.push(placeChar);
-  } else {
-
-  }
-  if (specialChar == true) {
-    placeChar += specialString.charAt(Math.floor(Math.random() * specialString.length));
-    return finalPassword.push(placeChar);
-  } else {
-
-  }
-  i++;
-  }
-} //Make the password same length as user desired
+    for (let i = 0; i < (chars); i++) {
+      var placeChar = "";
+      if (uppercase == true) {
+        placeChar = upperString.charAt(Math.floor(Math.random() * upperString.length));
+        finalPassword.push(placeChar);
+      }
+      if (lowercase == true) {
+        placeChar = lowerString.charAt(Math.floor(Math.random() * lowerString.length));
+        finalPassword.push(placeChar);
+      }
+      if (numbers == true) {
+        placeChar = numberString.charAt(Math.floor(Math.random() * numberString.length));
+        finalPassword.push(placeChar);
+      }
+      if (specialChar == true) {
+        placeChar = specialString.charAt(Math.floor(Math.random() * specialString.length));
+        finalPassword.push(placeChar);
+      }
+      i++;
+    } 
+  } //Make the password same length as user desired
+  getCharacters();
 for (y = finalPassword.length; y > chars; y--) {
   finalPassword.pop();
-} //Convert the password array into a string
-finalPassword.toString();
+  } //Convert the password array into a string
+let stringPassword = finalPassword;
+return stringPassword.join("");
 }
